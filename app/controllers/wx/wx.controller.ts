@@ -47,28 +47,33 @@ export class WxController {
             let code = data.code;
             let state =data.state;
             console.log("code:", code, " state:", state);
-        
+            // code: 031D7XFa1z9Z2C0YlAJa1Jcnze2D7XFi  state: STATE
+            // getApiConfigByAppId appId: wx73325e554f56eb05
+            // getApiConfigByAppId appId: wx73325e554f56eb05
+            
         let cabdata=await  SnsAccessTokenApi.getSnsAccessToken(code)
         let temp = JSON.parse(cabdata.toString());
+        console.log('temp'+temp);
+        
           // 判断 access_token 是否获取成功
-        if (temp.errcode) {
-              // access_token 获取失败
-              console.log(1+temp);
+        // if (temp.errcode) {
+        //       // access_token 获取失败
+        //       console.log(1+temp);
               
-              return { data: temp};
-         }
-         let access_token = temp.access_token;
-         let openid = temp.openid;
-         let scope = temp.scope;
-         if (scope == ScopeEnum.SNSAPI_USERINFO) {
-                    // 获取用户信息
-                 let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
-                 console.log(2+cab);
-                 return { data: cab};
-                } else {
-                    console.log(3+temp);
-                 return { data: temp};
-        }
+        //       return { data: temp};
+        //  }
+        //  let access_token = temp.access_token;
+        //  let openid = temp.openid;
+        //  let scope = temp.scope;
+        //  if (scope == ScopeEnum.SNSAPI_USERINFO) {
+        //             // 获取用户信息
+        //          let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
+        //          console.log(2+cab);
+        //          return { data: cab};
+        //         } else {
+        //             console.log(3+temp);
+        //          return { data: temp};
+        // }
 
   
     }
