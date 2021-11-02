@@ -52,8 +52,9 @@ export class WxController {
             // getApiConfigByAppId appId: wx73325e554f56eb05
             
         let cabdata=await  SnsAccessTokenApi.getSnsAccessToken(code)
+        console.log('cabdata'+cabdata);
         let temp = JSON.parse(cabdata.toString());
-        console.log('temp'+temp);
+       
         
           // 判断 access_token 是否获取成功
         // if (temp.errcode) {
