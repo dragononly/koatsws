@@ -1,0 +1,1 @@
+DATABASE_URL="mysql://user:pwd@172.18.2.90:3306/poadb_user"
