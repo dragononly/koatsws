@@ -53,19 +53,32 @@ export class WxController {
             
         let cabdata=await  SnsAccessTokenApi.getSnsAccessToken(code)
         console.log(cabdata);
-        let temp = JSON.parse(cabdata.toString());
+      
        
+        // {
+        //     access_token: '50_r7_rJANjYrlCWHNUUirZ5XcvXJOKSPV4P2UF-PrIFKAtQOBISS_he9XBlTHDPHNf4c5ApIUrsH1dtPTqDFY3hA',
+        //     expires_in: 7200,
+        //     refresh_token: '50_c_mzPrDXYEGA606UAtF84j8reXHcA3HRB2NVkX8mdvwJRGjG3Pl-vapJ82iBrtJSLv17m-P3ARJyQ_ifwJzBBA',
+        //     openid: 'oBX8_55ArgEGMEEdz5KUNVaLLZYo',
+        //     scope: 'snsapi_userinfo'
+        //   }
+        // let temp = JSON.parse(cabdata.toString());
+        let temp =cabdata
         
           // 判断 access_token 是否获取成功
-        // if (temp.errcode) {
-        //       // access_token 获取失败
-        //       console.log(1+temp);
+        if (temp.errcode) {
+              // access_token 获取失败
+              console.log(1+temp);
               
-        //       return { data: temp};
-        //  }
-        //  let access_token = temp.access_token;
-        //  let openid = temp.openid;
-        //  let scope = temp.scope;
+              return { data: temp};
+         }
+         let access_token = temp.access_token;
+         let openid = temp.openid;
+         let scope = temp.scope;
+
+         let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
+         console.log(2+cab);
+         return { data: cab};
         //  if (scope == ScopeEnum.SNSAPI_USERINFO) {
         //             // 获取用户信息
         //          let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
