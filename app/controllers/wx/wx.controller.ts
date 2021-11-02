@@ -53,7 +53,7 @@ export class WxController {
           // 判断 access_token 是否获取成功
         if (temp.errcode) {
               // access_token 获取失败
-              console.log(temp);
+              console.log(1+temp);
               
               return { data: temp};
          }
@@ -63,10 +63,10 @@ export class WxController {
          if (scope == ScopeEnum.SNSAPI_USERINFO) {
                     // 获取用户信息
                  let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
-                 console.log(cab);
+                 console.log(2+cab);
                  return { data: cab};
                 } else {
-                    console.log(temp);
+                    console.log(3+temp);
                  return { data: temp};
         }
 
