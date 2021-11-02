@@ -68,7 +68,7 @@ export class WxController {
           // 判断 access_token 是否获取成功
         if (temp.errcode) {
               // access_token 获取失败
-              console.log(1+temp);
+              console.log(temp);
               
               return { data: temp};
          }
@@ -77,7 +77,7 @@ export class WxController {
          let scope = temp.scope;
 
          let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
-         console.log(2+cab);
+         console.log(cab);
          return { data: cab};
         //  if (scope == ScopeEnum.SNSAPI_USERINFO) {
         //             // 获取用户信息
