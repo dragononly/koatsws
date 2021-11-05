@@ -77,17 +77,22 @@ export class WxController {
          let scope = temp.scope;
 
          let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
-         console.log(cab);
+        //  console.log(cab);
+        //  {
+        //     openid: 'oBX8_55ArgEGMEEdz5KUNVaLLZYo',
+        //     nickname: '熊布斯',
+        //     sex: 0,
+        //     language: '',
+        //     city: '',
+        //     province: '',
+        //     country: '',
+        //     headimgurl: 'https://thirdwx.qlogo.cn/mmopen/vi_32/Vibysc8gVYJpfJbZQ5ibXQAzhJxGkXywYclJEuCVGoQQjuE3hsPibNXrX1jwhN33ogmQdlSeToThtqGto9ficoFAhQ/132',
+        //     privilege: []
+        //   }
+          
+        //这里直接跳转，在url中携带参数
          return { data: cab};
-        //  if (scope == ScopeEnum.SNSAPI_USERINFO) {
-        //             // 获取用户信息
-        //          let cab= await  SnsAccessTokenApi.getUserInfo(access_token, openid, Lang.ZH_CN)
-        //          console.log(2+cab);
-        //          return { data: cab};
-        //         } else {
-        //             console.log(3+temp);
-        //          return { data: temp};
-        // }
+        
 
   
     }

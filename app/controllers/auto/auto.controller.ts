@@ -17,6 +17,7 @@ import { skyuser } from '../../../configs/db/schema/live/skyuser'
 import { zhibolist } from '../../../configs/db/schema/live/zhibolist'
 import { zhibolist_longtime } from '../../../configs/db/schema/live/zhibolist_longtime'
 import { user } from '../../../configs/db/schema/user/user'
+import { wx } from '../../../configs/db/schema/wx/wx'
      @JsonController()
      @Service()
      export class AutoController {
@@ -1042,6 +1043,134 @@ import { user } from '../../../configs/db/schema/user/user'
         @Delete('user/:id')
         async userremove(@Param('id') id: string) {
             let cab = await user.deleteOne({ _id: id })
+            return { data: cab };
+        }
+        //Get content
+        @Get('wx')
+        async wxget(@QueryParams() data: any) {
+            let obj: any = {}
+            let keyword = []
+            for (var prop in data) {
+                obj[prop] = data[prop]
+                keyword.push(prop)
+            }
+            let cab: any
+            if (keyword.includes('back')) {
+                let obj2: any = {}
+                if (obj['back'].includes(',')) {
+                    let arr = obj['back'].split(',')
+                    for (const i of arr) {
+                        obj2[i] = 1
+                    }
+                    cab = await wx.find(obj, obj2, { limit: parseInt(obj['limit']) })
+                } else {
+                    obj2 = obj['back']
+                    cab = await wx.find(obj, obj2, { limit: parseInt(obj['limit']) })
+                }
+            }
+            else if (keyword.includes('limit')) {
+                cab = await wx.find(obj, null, { limit: parseInt(obj['limit']) })
+            }
+            else {
+                cab = await wx.find(obj)
+            }
+            return { data: cab };
+        }
+        //Post content
+        @Post('wx')
+        async wxpost(@Body() data: any) {
+            let needsave = new wx(data)
+            let cab = await needsave.save()
+            return { data: cab };
+        }
+        //Put content
+        @Put('wx/:id')
+        async wxput(@Param('id') id: string, @Body() data: any) {
+            let obj: any = {}
+            let keyword = []
+            for (var prop in data) {
+                obj[prop] = data[prop]
+                keyword.push(prop)
+            }
+            let cab: any
+            if (keyword.includes('inc')) {
+                let obj2: any = {}
+                if (obj['inc'].includes(',')) {
+                    let arr = obj['inc'].split(',')
+                    for (const i of arr) {
+                        const mi=i.split('$')
+                        obj2[mi[0]] = mi[1]
+                    }
+                } else {
+                    const mi=obj['inc'].split('$')
+                    obj2[mi[0]] = mi[1]
+                }
+                cab = await wx.updateOne({ _id: id }, { '$inc': obj2 })
+            } 
+			else if (keyword.includes('pull')) {
+			            let obj2: any = {}
+			            if (obj['pull'].includes(',')) {
+			                let arr = obj['pull'].split(',')
+			                for (const i of arr) {
+			                    const mi = i.split('$')
+			                    obj2[mi[0]] = mi[1]
+			                }
+			            } else {
+			                const mi = obj['pull'].split('$')
+			                obj2[mi[0]] = mi[1]
+			            }
+			            cab = await wx.updateOne({ _id: id }, { '$pull': obj2 })
+			} else if (keyword.includes('push')) {
+			            let obj2: any = {}
+			            if (obj['push'].includes(',')) {
+			                let arr = obj['push'].split(',')
+			                for (const i of arr) {
+			                    const mi = i.split('$')
+			                    obj2[mi[0]] = mi[1]
+			                }
+			            } else {
+			                const mi = obj['push'].split('$')
+			                obj2[mi[0]] = mi[1]
+			            }
+			            cab = await wx.updateOne({ _id: id }, { '$push': obj2 })
+			}
+			else if (keyword.includes('pop')) {
+			            let obj2: any = {}
+			            if (obj['pop'].includes(',')) {
+			                let arr = obj['pop'].split(',')
+			                for (const i of arr) {
+			                    const mi = i.split('$')
+			                    obj2[mi[0]] = mi[1]
+			                }
+			            } else {
+			                const mi = obj['pop'].split('$')
+			                obj2[mi[0]] = mi[1]
+			            }
+			            cab = await wx.updateOne({ _id: id }, { '$pop': obj2 })
+			}
+			else if (keyword.includes('addToSet')) {
+			            let obj2: any = {}
+			            if (obj['addToSet'].includes(',')) {
+			                let arr = obj['addToSet'].split(',')
+			                for (const i of arr) {
+			                    const mi = i.split('$')
+			                    obj2[mi[0]] = mi[1]
+			                }
+			            } else {
+			                const mi = obj['addToSet'].split('$')
+			                obj2[mi[0]] = mi[1]
+			            }
+			            cab = await wx.updateOne({ _id: id }, { '$addToSet': obj2 })
+			}
+			else {
+                cab = await wx.updateOne({ _id: id }, data)
+            }
+            return { data: cab };
+        }
+        //Delete content
+        @Delete('wx/:id')
+        async wxremove(@Param('id') id: string) {
+            let cab = await wx.deleteOne({ _id: id })
             return { data: cab };
         }
 }
