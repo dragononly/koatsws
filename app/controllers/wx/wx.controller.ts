@@ -92,8 +92,5 @@ export class WxController {
           
         //这里直接跳转，在url中携带参数
          return { data: cab};
-        
-
-  
     }
 }

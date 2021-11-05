@@ -1,4 +1,4 @@
 export default {
   identity: 'development',
-  port: 9000,
+  port: 9200,
 }
